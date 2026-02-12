@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import clsx from 'clsx';
 import Image from 'next/image';
@@ -9,7 +9,8 @@ const warnIcon = '/assets/warn.svg';
 function Warn({ className, variant = '', title = '', description = '' }) {
   const variantClass = variant === 'big' ? styles.big : undefined;
   const titleClass = variant === 'big' ? styles.titleBig : undefined;
-  const descriptionClass = variant === 'big' ? styles.descriptionBig : undefined;
+  const descriptionClass =
+    variant === 'big' ? styles.descriptionBig : undefined;
 
   return (
     <div className={clsx(styles.warn, variantClass, className)}>

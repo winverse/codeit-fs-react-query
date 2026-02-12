@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import clsx from 'clsx';
 import * as styles from './Loading.css.js';
@@ -6,7 +6,8 @@ import * as styles from './Loading.css.js';
 function Loading({ className, variant = '', title = '', description = '' }) {
   const variantClass = variant === 'big' ? styles.big : undefined;
   const titleClass = variant === 'big' ? styles.titleBig : undefined;
-  const descriptionClass = variant === 'big' ? styles.descriptionBig : undefined;
+  const descriptionClass =
+    variant === 'big' ? styles.descriptionBig : undefined;
 
   return (
     <div className={clsx(styles.loading, variantClass, className)}>

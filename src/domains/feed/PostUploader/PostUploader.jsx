@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import PostForm from '@/domains/feed/PostForm';
 import { useLoginContext } from '@/contexts/LoginContext';

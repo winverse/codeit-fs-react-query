@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import clsx from 'clsx';
@@ -71,11 +71,12 @@ function PostContent({
   const router = useRouter();
   const [showCommentList, setShowCommentList] = useState(false);
 
-  const { data: commentCount, refetch: refetchCommentCount } =
-    useSuspenseQuery({
+  const { data: commentCount, refetch: refetchCommentCount } = useSuspenseQuery(
+    {
       queryKey: queryKeys.posts.commentCount(post.id),
       queryFn: () => getCommentCountByPostId(post.id),
-    });
+    },
+  );
 
   const { data: likeCount } = useSuspenseQuery({
     queryKey: queryKeys.posts.likeCount(post.id),
@@ -126,9 +127,7 @@ function PostContent({
           >
             <Image
               className={styles.like}
-              src={
-                isPostLikedByCurrentUser ? yellowHeartImage : greyHeartImage
-              }
+              src={isPostLikedByCurrentUser ? yellowHeartImage : greyHeartImage}
               alt="좋아요"
               width={12}
               height={12}

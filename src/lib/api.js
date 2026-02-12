@@ -1,9 +1,12 @@
 import { POSTS_PAGE_LIMIT } from './constants';
 
+// 1. API 기본 URL을 정합니다.
 const BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ??
   'https://learn.codeit.kr/api/codestudit';
 
+// 2. 포스트 목록 조회 함수를 만듭니다.
+// Codestudit API의 페이지 기준은 0부터 시작합니다.
 export async function getPosts(page = 0, limit = POSTS_PAGE_LIMIT) {
   const response = await fetch(`${BASE_URL}/posts?page=${page}&limit=${limit}`);
   return await response.json();
@@ -49,7 +52,7 @@ export async function getCommentCountByPostId(postId) {
   return body.count;
 }
 
-export async function getCommentsByPostId(postId, page, limit) {
+export async function getCommentsByPostId(postId, page = 0, limit) {
   const response = await fetch(
     `${BASE_URL}/posts/${postId}/comments?page=${page}&limit=${limit}`,
   );

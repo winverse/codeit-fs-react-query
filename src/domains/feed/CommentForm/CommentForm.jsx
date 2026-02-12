@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import TextInputForm from '@/domains/feed/TextInputForm';
 import * as styles from './CommentForm.css.js';

@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Container from '@/components/Container';
 import QueryBoundary from '@/components/QueryBoundary';

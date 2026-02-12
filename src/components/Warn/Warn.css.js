@@ -22,8 +22,7 @@ export const description = style({
   color: '#878787',
 });
 
-export const big = style({
-});
+export const big = style({});
 
 export const titleBig = style({
   fontSize: '24px',

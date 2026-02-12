@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import ContentInfo from '@/domains/feed/ContentInfo';
 import * as styles from './Comment.css.js';

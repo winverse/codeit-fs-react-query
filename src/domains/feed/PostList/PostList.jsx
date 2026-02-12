@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import Post from '@/domains/feed/Post';
 import { FEED_VARIANT } from '@/lib/constants';
