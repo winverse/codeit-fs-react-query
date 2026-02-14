@@ -1,28 +1,39 @@
 'use client';
 
-import { useLoginContext } from '@/contexts/LoginContext.jsx';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import TextInputForm from '@/domains/feed/TextInputForm';
+import { useLoginContext } from '@/contexts/LoginContext';
+import { queryKeys } from '@/lib/queryKeys';
+import { getUserInfo } from '@/lib/api';
 import * as styles from './PostForm.css.js';
-
-/*
-TODO(2-03): PostForm을 완성합니다.
-- 현재 사용자 정보 쿼리로 가져오기
-- onSubmit에 전달할 newPost 생성
-*/
 
 function PostForm({ onSubmit, buttonDisabled }) {
   const { currentUsername } = useLoginContext();
-  void onSubmit;
+  // 1. 현재 사용자 정보를 쿼리로 조회합니다.
+  const { data: currentUserInfo } = useSuspenseQuery({
+    queryKey: queryKeys.user.info(currentUsername),
+    queryFn: () => getUserInfo(currentUsername),
+  });
 
-  const handleSubmit = (content) => {
-    void content;
+  // 2. 제출 시 newPost를 구성해 업로드 흐름으로 넘깁니다.
+  const handleSubmit = async (content) => {
+    if (!currentUserInfo) {
+      return;
+    }
+    const newPost = {
+      username: currentUserInfo.username,
+      content: content,
+    };
+
+    onSubmit(newPost);
   };
 
   return (
     <div className={styles.textInputForm}>
+      {/* 3. 입력 폼에 사용자 정보를 전달합니다. */}
       <TextInputForm
         onSubmit={handleSubmit}
-        currentUserInfo={null}
+        currentUserInfo={currentUserInfo}
         placeholder="오늘의 공부 기록을 남겨보세요."
         buttonText="업로드"
         buttonDisabled={buttonDisabled}

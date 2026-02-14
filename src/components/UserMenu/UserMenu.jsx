@@ -4,9 +4,13 @@ import { useCallback, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import ProfilePhoto from '@/components/ProfilePhoto';
 import useClickOutside from '@/hooks/useClickOutside';
-import { USERNAMES } from '@/lib/constants';
+import { USER_INFO_STALE_TIME_MS, USERNAMES } from '@/lib/constants';
 import { useLoginContext } from '@/contexts/LoginContext';
 import * as styles from './UserMenu.css.js';
+import { useSuspenseQuery } from '@tanstack/react-query';
+import { queryKeys } from '@/lib/queryKeys.js';
+import { getUserInfo } from '@/lib/api.js';
+import { Suspense } from 'react';
 
 const anonymousUserIcon = '/assets/person.png';
 
@@ -15,6 +19,30 @@ TODO(2-06): UserMenu를 완성합니다.
 - 사용자 정보 쿼리 연결
 - 캐시 무효화와 로그아웃 처리
 */
+
+function UserMenuButtonContent({ photo, name }) {
+  return (
+    <>
+      <ProfilePhoto photo={photo} name={name} />
+      <div className={styles.userName}>{name}</div>
+    </>
+  );
+}
+
+function UserMenuLoggedIn({ currentUsername }) {
+  const { data: currentUserInfo } = useSuspenseQuery({
+    queryKey: queryKeys.user.info(currentUsername),
+    queryFn: () => getUserInfo(currentUsername),
+    staleTime: USER_INFO_STALE_TIME_MS,
+  });
+
+  return (
+    <UserMenuButtonContent
+      photo={currentUserInfo.photo}
+      name={currentUserInfo.name}
+    />
+  );
+}
 
 function UserMenu() {
   const router = useRouter();
@@ -49,11 +77,18 @@ function UserMenu() {
   return (
     <div className={styles.userMenu}>
       <button className={styles.iconButton} onClick={handleButtonClick}>
-        <ProfilePhoto
-          photo={anonymousUserIcon}
-          name={currentUsername || '로그인'}
-        />
-        <div className={styles.userName}>{currentUsername || '로그인'}</div>
+        {/* 3. 로그인 여부에 따라 Suspense 분기 UI로 변경합니다 */}
+        {currentUsername ? (
+          <Suspense
+            fallback={
+              <UserMenuButtonContent photo={anonymousUserIcon} name="로딩 중" />
+            }
+          >
+            <UserMenuLoggedIn currentUsername={currentUsername} />
+          </Suspense>
+        ) : (
+          <UserMenuButtonContent photo={anonymousUserIcon} name="로그인" />
+        )}
       </button>
       {isMenuOpen && (
         <ul className={styles.popup}>
