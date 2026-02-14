@@ -21,6 +21,7 @@ function CommentList({ currentUserInfo, postId }) {
 
   const comments = [];
 
+  // TODO(3-01): 댓글 추가 뮤테이션을 연결합니다.
   const handleAddComment = (newComment) => {
     void newComment;
   };
