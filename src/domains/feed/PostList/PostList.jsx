@@ -4,8 +4,8 @@ import Post from '@/domains/feed/Post';
 import { FEED_VARIANT } from '@/lib/constants';
 import Button from '@/components/Button';
 import { useLoginContext } from '@/contexts/LoginContext';
-import usePostListQuery from './usePostListQuery';
 import * as styles from './PostList.css.js';
+import usePostListQuery from '../hooks/usePostListQuery.js';
 
 function PostList({ variant = FEED_VARIANT.HOME_FEED }) {
   const { currentUsername } = useLoginContext();
