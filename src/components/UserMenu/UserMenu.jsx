@@ -49,6 +49,7 @@ function UserMenu() {
   return (
     <div className={styles.userMenu}>
       <button className={styles.iconButton} onClick={handleButtonClick}>
+        {/* 로그인 여부에 따라 Suspense 분기 UI로 변경합니다 */}
         <ProfilePhoto
           photo={anonymousUserIcon}
           name={currentUsername || '로그인'}
